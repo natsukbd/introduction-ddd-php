@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - .:/var/www/html
+    ports:
+      - 80:80
+    depends_on:
+      - php
+
+  php:
+    build: ./docker/php/
+    volumes:
+      - .:/var/www/html
+
+  composer:
+    image: composer
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html

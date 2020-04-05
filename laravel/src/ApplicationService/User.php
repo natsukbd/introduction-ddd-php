@@ -38,7 +38,7 @@ final class User
      */
     public static function createNewUser(UserName $userName): self
     {
-        return new static(new UserId(), $userName);
+        return new static(new UserId(Uuid::uuid4()->toString()), $userName);
     }
 
     /**

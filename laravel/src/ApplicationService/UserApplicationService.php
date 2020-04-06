@@ -6,6 +6,10 @@ namespace IntroductionDDD\ApplicationService;
 
 use RuntimeException;
 
+/**
+ * Class UserApplicationService
+ * @package IntroductionDDD\ApplicationService
+ */
 final class UserApplicationService
 {
     private UserRepositoryInterface $userRepository;
@@ -34,5 +38,14 @@ final class UserApplicationService
         $this->userRepository->save($user);
     }
 
+    /**
+     * @param string $userId
+     * @return User
+     */
+    public function get(string $userId): User
+    {
+        $targetId = new UserId($userId);
+        return $this->userRepository->findByUserId($targetId);
+    }
 
 }

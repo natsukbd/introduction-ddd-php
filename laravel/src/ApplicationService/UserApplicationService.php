@@ -53,8 +53,9 @@ final class UserApplicationService
     /**
      * @param string $userId
      * @param string $name
+     * @param string $mailAddress
      */
-    public function update(string $userId, string $name): void
+    public function update(string $userId, string $name = null, string $mailAddress = null): void
     {
         $targetId = new UserId($userId);
         $user = $this->userRepository->findByUserId($targetId);
@@ -62,10 +63,17 @@ final class UserApplicationService
             throw new RuntimeException('ユーザーが存在しません');
         }
 
-        $user->changeName(new UserName($name));
-        if ($this->userService->exists($user)) {
-            throw new RuntimeException('ユーザ名は既に存在しています');
+        if ($name !== null) {
+            $user->changeName(new UserName($name));
+            if ($this->userService->exists($user)) {
+                throw new RuntimeException('ユーザ名は既に存在しています');
+            }
         }
+
+        if ($mailAddress !== null) {
+            $user->changeMailAddress(new MailAddress($mailAddress));
+        }
+
         $this->userRepository->save($user);
     }
 }

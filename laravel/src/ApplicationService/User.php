@@ -68,6 +68,14 @@ final class User
     }
 
     /**
+     * @param MailAddress $mailAddress
+     */
+    public function changeMailAddress(MailAddress $mailAddress): void
+    {
+        $this->mailAddress = $mailAddress;
+    }
+
+    /**
      * @return UserId
      */
     public function getUserId(): UserId

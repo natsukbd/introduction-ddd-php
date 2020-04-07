@@ -49,4 +49,23 @@ final class UserApplicationService
         $user = $this->userRepository->findByUserId($targetId);
         return UserData::fromUser($user);
     }
+
+    /**
+     * @param string $userId
+     * @param string $name
+     */
+    public function update(string $userId, string $name): void
+    {
+        $targetId = new UserId($userId);
+        $user = $this->userRepository->findByUserId($targetId);
+        if ($user === null) {
+            throw new RuntimeException('ユーザーが存在しません');
+        }
+
+        $user->changeName(new UserName($name));
+        if ($this->userService->exists($user)) {
+            throw new RuntimeException('ユーザ名は既に存在しています');
+        }
+        $this->userRepository->save($user);
+    }
 }

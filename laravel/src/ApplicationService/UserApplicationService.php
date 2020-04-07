@@ -47,11 +47,6 @@ final class UserApplicationService
     {
         $targetId = new UserId($userId);
         $user = $this->userRepository->findByUserId($targetId);
-
-        return new UserData(
-            $user->getUserId()->getValue(),
-            $user->getName()->getValue(),
-            $user->getMailAddress()->getValue()
-        );
+        return UserData::fromUser($user);
     }
 }

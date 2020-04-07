@@ -25,11 +25,24 @@ final class UserData
      * @param string $name
      * @param string $mailAddress
      */
-    public function __construct(string $id, string $name, string $mailAddress)
+    private function __construct(string $id, string $name, string $mailAddress)
     {
         $this->id = $id;
         $this->name = $name;
         $this->mailAddress = $mailAddress;
+    }
+
+    /**
+     * @param User $user
+     * @return static
+     */
+    public static function fromUser(User $user): self
+    {
+        return new static(
+            $user->getUserId()->getValue(),
+            $user->getName()->getValue(),
+            $user->getMailAddress()->getValue()
+        );
     }
 
     /**

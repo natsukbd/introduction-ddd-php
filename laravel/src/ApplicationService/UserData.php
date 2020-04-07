@@ -14,16 +14,22 @@ final class UserData
      * @var string
      */
     private string $name;
+    /**
+     * @var string
+     */
+    private string $mailAddress;
 
     /**
      * UserData constructor.
      * @param string $id
      * @param string $name
+     * @param string $mailAddress
      */
-    public function __construct(string $id, string $name)
+    public function __construct(string $id, string $name, string $mailAddress)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->mailAddress = $mailAddress;
     }
 
     /**
@@ -40,5 +46,13 @@ final class UserData
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMailAddress(): string
+    {
+        return $this->mailAddress;
     }
 }

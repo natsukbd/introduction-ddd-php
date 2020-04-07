@@ -20,35 +20,43 @@ final class User
      * @var UserName
      */
     private UserName $name;
+    /**
+     * @var MailAddress
+     */
+    private MailAddress $mailAddress;
 
     /**
      * User constructor.
      * @param UserId $userId
      * @param UserName $name
+     * @param MailAddress $mailAddress
      */
-    private function __construct(UserId $userId, UserName $name)
+    private function __construct(UserId $userId, UserName $name, MailAddress $mailAddress)
     {
         $this->userId = $userId;
         $this->name = $name;
+        $this->mailAddress = $mailAddress;
     }
 
     /**
      * @param UserName $userName
+     * @param MailAddress $mailAddress
      * @return static
      */
-    public static function createNewUser(UserName $userName): self
+    public static function createNewUser(UserName $userName, MailAddress $mailAddress): self
     {
-        return new static(new UserId(Uuid::uuid4()->toString()), $userName);
+        return new static(new UserId(Uuid::uuid4()->toString()), $userName, $mailAddress);
     }
 
     /**
      * @param UserId $userId
      * @param UserName $userName
+     * @param MailAddress $mailAddress
      * @return static
      */
-    public static function createUser(UserId $userId, UserName $userName): self
+    public static function createUser(UserId $userId, UserName $userName, MailAddress $mailAddress): self
     {
-        return new static($userId, $userName);
+        return new static($userId, $userName, $mailAddress);
     }
 
     /**
@@ -73,6 +81,14 @@ final class User
     public function getName(): UserName
     {
         return $this->name;
+    }
+
+    /**
+     * @return MailAddress
+     */
+    public function getMailAddress(): MailAddress
+    {
+        return $this->mailAddress;
     }
 }
 

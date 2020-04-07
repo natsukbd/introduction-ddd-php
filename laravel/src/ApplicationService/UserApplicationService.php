@@ -28,10 +28,11 @@ final class UserApplicationService
 
     /**
      * @param string $name
+     * @param string $mail
      */
-    public function register(string $name): void
+    public function register(string $name, string $mail): void
     {
-        $user = User::createNewUser(new UserName($name));
+        $user = User::createNewUser(new UserName($name), new MailAddress($mail));
         if ($this->userService->exists($user)) {
             throw new RuntimeException('ユーザは既に存在しています');
         }
@@ -47,6 +48,10 @@ final class UserApplicationService
         $targetId = new UserId($userId);
         $user = $this->userRepository->findByUserId($targetId);
 
-        return new UserData($user->getUserId()->getValue(), $user->getName()->getValue());
+        return new UserData(
+            $user->getUserId()->getValue(),
+            $user->getName()->getValue(),
+            $user->getMailAddress()->getValue()
+        );
     }
 }

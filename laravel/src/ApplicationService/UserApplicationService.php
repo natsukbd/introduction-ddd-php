@@ -40,12 +40,13 @@ final class UserApplicationService
 
     /**
      * @param string $userId
-     * @return User
+     * @return UserData
      */
-    public function get(string $userId): User
+    public function get(string $userId): UserData
     {
         $targetId = new UserId($userId);
-        return $this->userRepository->findByUserId($targetId);
-    }
+        $user = $this->userRepository->findByUserId($targetId);
 
+        return new UserData($user->getUserId()->getValue(), $user->getName()->getValue());
+    }
 }

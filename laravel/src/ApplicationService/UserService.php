@@ -27,7 +27,9 @@ final class UserService
      */
     public function exists(User $user): bool
     {
-        $duplicatedUser = $this->userRepository->findByUserName($user->getName());
+        // $duplicatedUser = $this->userRepository->findByUserName($user->getName());
+        // 重複のルールを変更
+        $duplicatedUser = $this->userRepository->findByMailAddress($user->getMailAddress());
         return $duplicatedUser !== null;
     }
 }

@@ -14,6 +14,8 @@ interface UserRepositoryInterface
 
     public function findByUserName(UserName $name): User;
 
+    public function findByMailAddress(MailAddress $name): User;
+
     public function save(User $user): void;
 
     public function delete(User $user): void;

@@ -74,4 +74,18 @@ final class UserApplicationService
 
         $this->userRepository->save($user);
     }
+
+    /**
+     * @param UserDeleteCommand $command
+     */
+    public function delete(UserDeleteCommand $command): void
+    {
+        $targetId = new UserId($command->getId());
+        $user = $this->userRepository->findByUserId($targetId);
+
+        if ($user === null) {
+            throw new RuntimeException('ユーザーが存在しません');
+        }
+        $this->userRepository->delete($user);
+    }
 }

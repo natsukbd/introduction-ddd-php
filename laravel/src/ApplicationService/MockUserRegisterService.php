@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace IntroductionDDD\ApplicationService;
 
+use RuntimeException;
+
 /**
  * Class MockUserRegisterService
  * @package IntroductionDDD\ApplicationService
@@ -16,6 +18,6 @@ final class MockUserRegisterService implements UserRegisterServiceInterface
      */
     public function handle(UserRegisterCommand $command)
     {
-        // TODO: Implement handle() method.
+        throw new RuntimeException($command->getName());
     }
 }

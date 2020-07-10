@@ -16,6 +16,15 @@ final class UserRegisterCommand
     private string $mailAddress;
 
     /**
+     * UserRegisterCommand constructor.
+     * @param string $name
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return string
      */
     public function getName(): string

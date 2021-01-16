@@ -12,6 +12,8 @@ use RuntimeException;
  */
 final class UserApplicationService
 {
+    private bool $sendMail;
+
     // userRepositoryを状態として持つが、直接的にサービスの振る舞いを変更しない
     private UserRepositoryInterface $userRepository;
     private UserService $userService;
@@ -38,6 +40,11 @@ final class UserApplicationService
             throw new RuntimeException('ユーザは既に存在しています');
         }
         $this->userRepository->save($user);
+
+        // 自身の振る舞いを変化させる目的で状態を持ってしまっている
+        if ($this->sendMail) {
+            // 送信処理
+        }
     }
 
     /**

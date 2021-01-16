@@ -12,6 +12,7 @@ use RuntimeException;
  */
 final class UserApplicationService
 {
+    // userRepositoryを状態として持つが、直接的にサービスの振る舞いを変更しない
     private UserRepositoryInterface $userRepository;
     private UserService $userService;
 

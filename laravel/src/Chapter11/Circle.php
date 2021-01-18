@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace IntroductionDDD\Chapter11;
 
+use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Immutable;
 
 #[Immutable]
@@ -39,9 +40,9 @@ final class Circle
         return $this->user;
     }
 
-    /**
-     * @return User[]
-     */
+    #[ArrayShape([
+        User::class
+    ])]
     public function members(): array
     {
         return $this->members;

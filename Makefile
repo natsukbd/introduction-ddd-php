@@ -18,5 +18,5 @@ phpcbf:
 .PHONY: phpcbf
 
 phpstan:
-	docker-compose run --rm --workdir=/var/www/html/laravel php ./vendor/bin/phpstan analyze --level max src
+	docker-compose run --rm --workdir=/var/www/html/laravel php ./vendor/bin/phpstan analyze -c /var/www/html/phpstan.neon
 .PHONY: phpstan

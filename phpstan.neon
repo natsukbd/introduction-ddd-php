@@ -1,0 +1,8 @@
+includes:
+    - ./laravel/vendor/nunomaduro/larastan/extension.neon
+    - ./laravel/vendor/timeweb/phpstan-enum/extension.neon
+parameters:
+    level: max
+    paths:
+        - laravel/src
+    checkMissingIterableValueType: false

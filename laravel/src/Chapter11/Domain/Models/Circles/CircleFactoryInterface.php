@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace IntroductionDDD\Chapter11;
+namespace IntroductionDDD\Chapter11\Domain\Models\Circles;
+
+use IntroductionDDD\Chapter11\Domain\Models\Users\User;
 
 interface CircleFactoryInterface
 {

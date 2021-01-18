@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace IntroductionDDD\Chapter11;
+namespace IntroductionDDD\Chapter11\Domain\Models\Circles;
 
+use IntroductionDDD\Chapter11\Domain\Exceptions\ArgumentException;
 use JetBrains\PhpStorm\Immutable;
 use JetBrains\PhpStorm\Pure;
 

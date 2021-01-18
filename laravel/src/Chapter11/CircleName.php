@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace IntroductionDDD\Chapter11;
 
+use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Pure;
+
+#[Immutable]
 final class CircleName
 {
     /**
@@ -27,8 +31,10 @@ final class CircleName
         return $this->value;
     }
 
-    public function equals(CircleName $other): bool
-    {
+    #[Pure]
+    public function equals(
+        CircleName $other
+    ): bool {
         return $this->value() === $other->value();
     }
 }

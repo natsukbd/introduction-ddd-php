@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace IntroductionDDD\Chapter11;
 
+use JetBrains\PhpStorm\Immutable;
+
+#[Immutable]
 final class CircleId
 {
     /**

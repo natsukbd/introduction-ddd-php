@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace IntroductionDDD\Chapter11\Domain\Models\Circles;
 
 use IntroductionDDD\Chapter11\Domain\Models\Users\User;
-use JetBrains\PhpStorm\ArrayShape;
+use IntroductionDDD\Chapter11\Domain\Models\Users\Users;
 use JetBrains\PhpStorm\Immutable;
 
 #[Immutable]
@@ -16,13 +16,13 @@ final class Circle
      * @param CircleId $circleId
      * @param CircleName $circleName
      * @param User $user
-     * @param User[] $members
+     * @param Users $members
      */
     public function __construct(
         private CircleId $circleId,
         private CircleName $circleName,
         private User $user,
-        private array $members,
+        private Users $members,
     ) {
     }
 
@@ -41,10 +41,7 @@ final class Circle
         return $this->user;
     }
 
-    #[ArrayShape([
-        User::class
-    ])]
-    public function members(): array
+    public function members(): Users
     {
         return $this->members;
     }

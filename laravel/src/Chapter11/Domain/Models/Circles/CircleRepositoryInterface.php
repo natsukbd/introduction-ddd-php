@@ -6,7 +6,7 @@ namespace IntroductionDDD\Chapter11\Domain\Models\Circles;
 
 interface CircleRepositoryInterface
 {
-    public function save(): void;
+    public function save(Circle $circle): void;
 
     public function findById(CircleId $id): Circle;
 

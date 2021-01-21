@@ -36,6 +36,7 @@ final class Circle
         return $this->circleName;
     }
 
+    // オーナーとメンバーが別管理になっている
     public function owner(): User
     {
         return $this->user;

@@ -8,8 +8,11 @@ use IntroductionDDD\Chapter11\Application\Circles\Create\CircleCreateCommand;
 use IntroductionDDD\Chapter11\Application\Circles\Exceptions\CanNotRegisterCircleException;
 use IntroductionDDD\Chapter11\Application\Circles\Exceptions\CircleFullException;
 use IntroductionDDD\Chapter11\Application\Circles\Exceptions\CircleNotFoundException;
+use IntroductionDDD\Chapter11\Application\Circles\Invite\CircleInviteCommand;
 use IntroductionDDD\Chapter11\Application\Circles\Join\CircleJoinCommand;
 use IntroductionDDD\Chapter11\Application\Users\Exceptions\UserNotFoundException;
+use IntroductionDDD\Chapter11\Domain\Models\CircleInvitations\CircleInvitation;
+use IntroductionDDD\Chapter11\Domain\Models\CircleInvitations\CircleInvitationRepositoryInterface;
 use IntroductionDDD\Chapter11\Domain\Models\Circles\Circle;
 use IntroductionDDD\Chapter11\Domain\Models\Circles\CircleFactoryInterface;
 use IntroductionDDD\Chapter11\Domain\Models\Circles\CircleId;
@@ -30,6 +33,7 @@ final class CircleApplicationService
      * @param CircleFactoryInterface $circleFactory
      * @param CircleRepositoryInterface $circleRepository
      * @param CircleService $circleService
+     * @param CircleInvitationRepositoryInterface $circleInvitationRepository
      * @param UserRepositoryInterface $userRepository
      * @param Transaction $transaction
      */
@@ -37,6 +41,7 @@ final class CircleApplicationService
         private CircleFactoryInterface $circleFactory,
         private CircleRepositoryInterface $circleRepository,
         private CircleService $circleService,
+        private CircleInvitationRepositoryInterface $circleInvitationRepository,
         private UserRepositoryInterface $userRepository,
         private Transaction $transaction
     ) {
@@ -86,6 +91,39 @@ final class CircleApplicationService
 
                 $circle->members()->add($member);
                 $this->circleRepository->save($circle);
+            }
+        );
+    }
+
+    public function invite(CircleInviteCommand $command): void
+    {
+        $this->transaction->scope(
+            function () use ($command) {
+                $fromUserId = new UserId($command->fromUserId());
+                $fromUser = $this->userRepository->findById($fromUserId);
+                if (!$fromUser instanceof User) {
+                    throw new UserNotFoundException('招待元ユーザが見つかりませんでした');
+                }
+
+                $invitedUserId = new UserId($command->inviteUserId());
+                $invitedUser = $this->userRepository->findById($invitedUserId);
+
+                if (!$invitedUser instanceof User) {
+                    throw new UserNotFoundException('招待先ユーザが見つかりませんでした');
+                }
+
+                $circleId = new CircleId($command->circleId());
+                $circle = $this->circleRepository->findById($circleId);
+                if (!$circle instanceof Circle) {
+                    throw new CircleNotFoundException('サークルが見つかりませんでした');
+                }
+
+                if ($circle->members()->count() >= 29) {
+                    throw new CircleFullException($circleId->value());
+                }
+
+                $circleInvitation = new CircleInvitation($circle, $fromUser, $invitedUser);
+                $this->circleInvitationRepository->save($circleInvitation);
             }
         );
     }
